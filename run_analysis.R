@@ -58,6 +58,57 @@ SubjectTestData  <- read.table(file.path(rootfilepath, "test" , "subject_test.tx
 ## STEP 1
 ## Merges the training and the test sets to create one data set
   ## 1. Merge the data table by rows respectively.
-dataSubject <- rbind(dataSubjectTrain, dataSubjectTest)
-dataActivity<- rbind(dataActivityTrain, dataActivityTest)
-dataFeatures<- rbind(dataFeaturesTrain, dataFeaturesTest)
+SubjectData <- rbind(SubjectTrainData, SubjectTestData)
+ActivityData<- rbind(ActivityTrainData, ActivityTestData)
+FeaturesData<- rbind(FeaturesTrainData, FeaturesTestData)
+  ## 2. Give names to Variables declared
+names(SubjectData)<-c("subject")
+names(ActivityData)<- c("activity")
+FeaturesNames <- read.table(file.path(rootfilepath, "features.txt"),head=FALSE)
+names(FeaturesData)<- FeaturesNames$V2
+## 3.Merge columns to get the data frame Data for all data
+Merge <- cbind(SubjectData, ActivityData)
+DATA <- cbind(FeaturesData, Merge)
+
+############################################################################################################
+## STEP 2
+## Extracts only the measurements on the mean and standard deviation for each measurement
+  ## 1.Subset Name of Features by measurements with “mean()” or “std()”
+Mean_SD_Features<-FeaturesNames$V2[grep("mean\\(\\)|std\\(\\)", FeaturesNames$V2)]
+  ## 2.Subset the data frame Data by seleted names of Features
+NamesSelected<-c(as.character(Mean_SD_Features), "subject", "activity")
+DATA<-subset(DATA,select=NamesSelected)
+## 3. To view the data structuire of files in DATA , use str(DATA)
+
+############################################################################################################
+## STEP 3
+## Uses descriptive activity names to name the activities in the data set
+  ## 1. Read descriptive activity names from “activity_labels.txt”
+LabelsActivities <- read.table(file.path(rootfilepath, "activity_labels.txt"),header = FALSE)
+  ## 2. Update values with correct activity names
+ActivityData[, 1] <- LabelsActivities[ActivityData[, 1], 2]
+  ## 3. Correct column name
+names(ActivityData) <- "activity"
+
+############################################################################################################
+## Step 4
+## Appropriately label the data set with descriptive variable names
+names(DATA)<-gsub("^t", "time", names(DATA))
+names(DATA)<-gsub("^f", "frequency", names(DATA))
+names(DATA)<-gsub("Acc", "Accelerometer", names(DATA))
+names(DATA)<-gsub("Gyro", "Gyroscope", names(DATA))
+names(DATA)<-gsub("Mag", "Magnitude", names(DATA))
+names(DATA)<-gsub("BodyBody", "Body", names(DATA))
+## In order to view the names in DATA, use names(DATA) command
+
+
+############################################################################################################
+## Step 5
+## Creates a second,independent tidy data set and ouput it
+library(plyr);
+TidyData<-aggregate(. ~subject + activity, DATA, mean)
+TidyData<-TidyData[order(TidyData$subject,TidyData$activity),]
+write.table(TidyData, file = "tidydata.txt",row.name=FALSE)
+
+############################################################################################################
+
