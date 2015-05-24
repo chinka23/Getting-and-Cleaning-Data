@@ -2,7 +2,7 @@
 
 Varun Vasudevan
 
-### Overview
+### Outline of the course project
 The purpose of this project is to demonstrate your ability to collect, work with, and clean a data set that can be used for 
 analysis at a later stage. A full description of the data used in this project can be found at [The UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones)
 
@@ -11,7 +11,7 @@ analysis at a later stage. A full description of the data used in this project c
 ### Changes to this Script
 After getting ther unzipped files, you will need to create a Directory
 
-### Project Summary
+### Summary of the Course Project
 The following is a summary description of the project instructions
 
 You should create one R script called run_analysis.R that does the following. 
@@ -21,7 +21,7 @@ You should create one R script called run_analysis.R that does the following.
 4. Appropriately labels the data set with descriptive activity names. 
 5. Creates a second, independent tidy data set with the average of each variable for each activity and each subject. 
 
-### Additional Information
+### Extra Useful Information
 You can find additional information about the variables, data and transformations in the CodeBook.MD file.
 The code takes for granted all the data is present in the same folder, un-compressed and without names altered.
 CodeBook.md describes the variables, the data, and any transformations or work that was performed to clean up the data.
