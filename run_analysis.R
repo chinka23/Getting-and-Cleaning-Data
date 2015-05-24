@@ -5,7 +5,7 @@ fileUrl <- "http://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20
 download.file(fileUrl,destfile="./data/Dataset.zip",method="auto")
 unzip(zipfile="./data/Dataset.zip",exdir="./data")
 rootfilepath <- file.path("./data" , "UCI HAR Dataset")
-filescontent<-list.files(path_rf, recursive=TRUE)
+filescontent<-list.files(rootfilepath, recursive=TRUE)
 filescontent
 
 ##  [1] "activity_labels.txt"                         
